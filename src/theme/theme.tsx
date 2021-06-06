@@ -7,10 +7,10 @@ const theme = {
         darker: '#0d0d0d'
     },
     mediaQueries: {
-        below640: `only screen and (max-width: 640px)`,
-        below768: 'only screen and (max-width: 768px)',
-        below1024: 'only screen and (max-width: 1024px)',
-        below1280: 'only screen and (max-width: 1280px)',
+        topOf640: `only screen and (min-width: 40rem)`,
+        topOf768: 'only screen and (min-width: 48px)',
+        topOf1024: 'only screen and (min-width: 64px)',
+        topOf1280: 'only screen and (min-width: 80px)',
     },
 
 }
