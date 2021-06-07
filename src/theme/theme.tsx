@@ -1,9 +1,9 @@
 const theme = {
     colors: {
         text: '#fafafa',
-        cold: 'rgb(147,197,253)',
+        cold: '#2196f3',
         hot: '#fd9393',
-        dark: 'rgb(55,65,81)',
+        dark: '#363636',
         darker: '#0d0d0d'
     },
     mediaQueries: {
