@@ -1,4 +1,4 @@
-import styled, {css} from "styled-components";
+import styled, {css, keyframes} from "styled-components";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import {useState, useRef, useEffect} from "react";
@@ -8,11 +8,23 @@ interface Props {
     onSubmit: (term: string) => void;
 }
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 3rem;
+  animation: ${fadeIn} 2s ;
 
 `
 const SearchWrapper = styled.div`
