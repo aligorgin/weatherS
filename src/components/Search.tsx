@@ -5,6 +5,7 @@ import {useState, useRef, useEffect} from "react";
 
 interface Props {
     button: string;
+    onSubmit: (term: string) => void;
 }
 
 const Wrapper = styled.div`
@@ -14,7 +15,6 @@ const Wrapper = styled.div`
   margin-top: 3rem;
 
 `
-
 const SearchWrapper = styled.div`
   font-size: 1.2rem;
   border-bottom: 2px solid ${({theme}) => theme.colors.text};
@@ -26,7 +26,6 @@ const SearchWrapper = styled.div`
   `
   }
 `
-
 const Input = styled.input`
   &:focus {
     outline: none;
@@ -44,7 +43,6 @@ const Input = styled.input`
   margin-right: 3rem;
   font-size: 1.4rem;
 `
-
 const Button = styled.button`
   position: relative;
   display: inline-flex;
@@ -87,39 +85,52 @@ const Button = styled.button`
 
 `
 
-export function Search({button}: Props) {
+export function Search({button, onSubmit}: Props) {
 
     const [isFocused, setIsFocused] = useState(false);
     const [X, setX] = useState(0);
     const [Y, setY] = useState(0);
+    const [city, setCity] = useState('');
 
     const InputEl = useRef<HTMLInputElement>(null);
     const ButtonEl = useRef<HTMLButtonElement>(null)
-
     const handleOnFocus = () => {
         setIsFocused(true)
     };
-
     const handleOnBlur = () => {
         setIsFocused(false)
     };
-
     const handleOnMouseMove = (e) => {
         setX(e.pageX - ButtonEl.current.offsetLeft);
         setY(e.pageY - ButtonEl.current.offsetTop);
     };
 
+    const onInputChange = (e) => {
+        setCity(e.target.value)
+    }
+
+    //gtr: communication child to parent
+
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+        onSubmit(city);
+    }
+
     return (
-        <Wrapper>
-            <SearchWrapper isFocused={isFocused}>
-                <FontAwesomeIcon icon={faSearch}/>
-            </SearchWrapper>
-            <Input ref={InputEl} type='text' onFocus={handleOnFocus} onBlur={handleOnBlur} placeholder='city..'/>
-            <Button ref={ButtonEl} onMouseEnter={handleOnMouseMove} X={X} Y={Y}>
+        <form onSubmit={onFormSubmit} action="">
+            <Wrapper>
+                <SearchWrapper isFocused={isFocused}>
+                    <FontAwesomeIcon icon={faSearch}/>
+                </SearchWrapper>
+                <Input ref={InputEl} type='text' value={city} onChange={onInputChange} onFocus={handleOnFocus}
+                       onBlur={handleOnBlur}
+                       placeholder='city..'/>
+                <Button ref={ButtonEl} onMouseEnter={handleOnMouseMove} X={X} Y={Y}>
                 <span>
                     {button}
                 </span>
-            </Button>
-        </Wrapper>
+                </Button>
+            </Wrapper>
+        </form>
     )
 }

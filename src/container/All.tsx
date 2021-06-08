@@ -8,12 +8,17 @@ const Wrapper = styled.div`
   margin: 0 auto;
 `
 
-export default function All(){
-    return(
+export default function All() {
+
+    const onSearchSubmit = (term :string) => {
+        console.log(term);
+    }
+
+    return (
         <Wrapper>
             <Header title='Weather App'/>
-            <Search button='Search'/>
-            <Results/>
+            <Search button='Search' onSubmit={onSearchSubmit}/>
+            <Results temperature={75}/>
         </Wrapper>
 
     )
