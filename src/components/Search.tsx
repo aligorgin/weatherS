@@ -3,6 +3,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
 import {useState, useRef, useEffect} from "react";
 
+interface Props {
+    button: string;
+}
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -15,7 +19,7 @@ const SearchWrapper = styled.div`
   font-size: 1.2rem;
   border-bottom: 2px solid ${({theme}) => theme.colors.text};
   color: ${({theme}) => theme.colors.text};
-  padding: 0 .25rem 0 0;
+  padding: 0 .25rem 0.25rem 0;
   ${props => props.isFocused && css`
     border-bottom: 2px solid ${({theme}) => theme.colors.cold};
     color: ${({theme}) => theme.colors.cold};
@@ -36,7 +40,7 @@ const Input = styled.input`
   border-right: none;
   border-left: none;
   border-bottom: 2px solid ${({theme}) => theme.colors.text};
-  padding: 0 0 .25rem .5rem;
+  padding: 0 0 .5rem .5rem;
   margin-right: 3rem;
   font-size: 1.4rem;
 `
@@ -71,7 +75,7 @@ const Button = styled.button`
     height: 15rem;
   }
 
-  &:active{
+  &:active {
     transform: scale(95%);
     transition: transform .2s;
   }
@@ -83,7 +87,7 @@ const Button = styled.button`
 
 `
 
-export function Search() {
+export function Search({button}: Props) {
 
     const [isFocused, setIsFocused] = useState(false);
     const [X, setX] = useState(0);
@@ -113,7 +117,7 @@ export function Search() {
             <Input ref={InputEl} type='text' onFocus={handleOnFocus} onBlur={handleOnBlur} placeholder='city..'/>
             <Button ref={ButtonEl} onMouseEnter={handleOnMouseMove} X={X} Y={Y}>
                 <span>
-                    Search
+                    {button}
                 </span>
             </Button>
         </Wrapper>

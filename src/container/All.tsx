@@ -1,6 +1,7 @@
 import {Header} from "../components/Header";
 import styled from "styled-components";
 import {Search} from "../components/Search";
+import {Results} from "../components/Results";
 
 const Wrapper = styled.div`
   width: 45rem;
@@ -11,7 +12,8 @@ export default function All(){
     return(
         <Wrapper>
             <Header title='Weather App'/>
-            <Search/>
+            <Search button='Search'/>
+            <Results/>
         </Wrapper>
 
     )
