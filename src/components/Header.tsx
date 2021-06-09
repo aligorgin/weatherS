@@ -21,6 +21,7 @@ const Title = styled.h1`
   text-align: center;
   font-size: 3rem;
   animation: ${fadeIn} 1s ;
+  cursor: pointer;
 `
 
 export function Header({title}: Props) {

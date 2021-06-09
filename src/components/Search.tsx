@@ -6,8 +6,8 @@ import {useState, useRef, useEffect} from "react";
 interface Props {
     button: string;
     onSubmit: (term: string) => void;
+    haveErr:boolean;
 }
-
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -18,7 +18,6 @@ const fadeIn = keyframes`
     transform: translateY(0);
   }
 `
-
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -32,11 +31,15 @@ const SearchWrapper = styled.div`
   border-bottom: 2px solid ${({theme}) => theme.colors.text};
   color: ${({theme}) => theme.colors.text};
   padding: 0 .25rem 0.25rem 0;
+  
+  // test if else in line in the border and color
+  
   ${props => props.isFocused && css`
     border-bottom: 2px solid ${({theme}) => theme.colors.cold};
     color: ${({theme}) => theme.colors.cold};
   `
   }
+  
 `
 const Input = styled.input`
   &:focus {
@@ -54,6 +57,12 @@ const Input = styled.input`
   padding: 0 0 .5rem .5rem;
   margin-right: 3rem;
   font-size: 1.4rem;
+
+  ${props => props.haveErr && css `
+    &:focus{
+      border-color: ${({theme}) => theme.colors.hot};
+    }
+ `}
 `
 const Button = styled.button`
   position: relative;
@@ -66,6 +75,10 @@ const Button = styled.button`
   border-width: 0;
   overflow: hidden;
   border-radius: 5px;
+  
+ ${props => props.haveErr && css `
+   background: ${({theme}) => theme.colors.hot};
+ `}
 
   &:before {
     content: '';
@@ -97,7 +110,7 @@ const Button = styled.button`
 
 `
 
-export function Search({button, onSubmit}: Props) {
+export function Search({button, onSubmit,haveErr}: Props) {
 
     const [isFocused, setIsFocused] = useState(false);
     const [X, setX] = useState(0);
@@ -116,13 +129,10 @@ export function Search({button, onSubmit}: Props) {
         setX(e.pageX - ButtonEl.current.offsetLeft);
         setY(e.pageY - ButtonEl.current.offsetTop);
     };
-
     const onInputChange = (e) => {
         setCity(e.target.value)
     }
-
     //gtr: communication child to parent
-
     const onFormSubmit = (e) => {
         e.preventDefault();
         onSubmit(city);
@@ -131,13 +141,13 @@ export function Search({button, onSubmit}: Props) {
     return (
         <form onSubmit={onFormSubmit} action="">
             <Wrapper>
-                <SearchWrapper isFocused={isFocused}>
+                <SearchWrapper haveErr={haveErr} isFocused={isFocused}>
                     <FontAwesomeIcon icon={faSearch}/>
                 </SearchWrapper>
-                <Input ref={InputEl} type='text' value={city} onChange={onInputChange} onFocus={handleOnFocus}
+                <Input haveErr={haveErr} ref={InputEl} type='text' value={city} onChange={onInputChange} onFocus={handleOnFocus}
                        onBlur={handleOnBlur}
                        placeholder='city..'/>
-                <Button ref={ButtonEl} onMouseMove={handleOnMouseMove} X={X} Y={Y}>
+                <Button haveErr={haveErr} ref={ButtonEl} onMouseMove={handleOnMouseMove} X={X} Y={Y}>
                 <span>
                     {button}
                 </span>
