@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 3rem;
-  animation: ${fadeIn} 2s ;
+  animation: ${fadeIn} 2s;
 
 `
 const SearchWrapper = styled.div`
@@ -59,7 +59,7 @@ const Button = styled.button`
   position: relative;
   display: inline-flex;
   padding: 0.625rem 1.9rem;
-  background: ${({theme}) => theme.colors.dark};
+  background: ${({theme}) => theme.colors.cold};
   color: ${({theme}) => theme.colors.text};
   text-decoration: none;
   letter-spacing: 1px;
@@ -76,7 +76,7 @@ const Button = styled.button`
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: ${({theme}) => theme.colors.cold};
+    background: ${({theme}) => theme.colors.dark};
     transition: width .5s, height .5s;
   }
 
@@ -137,7 +137,7 @@ export function Search({button, onSubmit}: Props) {
                 <Input ref={InputEl} type='text' value={city} onChange={onInputChange} onFocus={handleOnFocus}
                        onBlur={handleOnBlur}
                        placeholder='city..'/>
-                <Button ref={ButtonEl} onMouseEnter={handleOnMouseMove} X={X} Y={Y}>
+                <Button ref={ButtonEl} onMouseMove={handleOnMouseMove} X={X} Y={Y}>
                 <span>
                     {button}
                 </span>

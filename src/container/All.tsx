@@ -15,7 +15,7 @@ export default function All() {
 
     const onSearchSubmit = (term: string) => {
         console.log(term);
-        setIsShow(true)
+        term === '' ? setIsShow(false) : setIsShow(true);
     }
 
     return (
