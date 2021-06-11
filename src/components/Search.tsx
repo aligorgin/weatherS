@@ -6,8 +6,9 @@ import {useState, useRef, useEffect} from "react";
 interface Props {
     button: string;
     onSubmit: (term: string) => void;
-    haveErr:boolean;
+    haveErr: boolean;
 }
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -32,14 +33,18 @@ const SearchWrapper = styled.div`
   color: ${({theme}) => theme.colors.text};
   padding: 0 .25rem 0.25rem 0;
   
-  // test if else in line in the border and color
-  
   ${props => props.isFocused && css`
-    border-bottom: 2px solid ${({theme}) => theme.colors.cold};
+    border-color: ${({theme}) => theme.colors.cold};
     color: ${({theme}) => theme.colors.cold};
-  `
-  }
+  `}
   
+  ${props => props.haveErr && css`
+    ${props => props.isFocused && css`
+      border-color: ${({theme}) => theme.colors.hot};
+      color: ${({theme}) => theme.colors.hot};
+    `}
+  `}
+
 `
 const Input = styled.input`
   &:focus {
@@ -58,11 +63,11 @@ const Input = styled.input`
   margin-right: 3rem;
   font-size: 1.4rem;
 
-  ${props => props.haveErr && css `
-    &:focus{
+  ${props => props.haveErr && css`
+    &:focus {
       border-color: ${({theme}) => theme.colors.hot};
     }
- `}
+  `}
 `
 const Button = styled.button`
   position: relative;
@@ -75,11 +80,10 @@ const Button = styled.button`
   border-width: 0;
   overflow: hidden;
   border-radius: 5px;
-  
- ${props => props.haveErr && css `
-   background: ${({theme}) => theme.colors.hot};
- `}
 
+  ${props => props.haveErr && css`
+    background: ${({theme}) => theme.colors.hot};
+  `}
   &:before {
     content: '';
     position: absolute;
@@ -110,7 +114,7 @@ const Button = styled.button`
 
 `
 
-export function Search({button, onSubmit,haveErr}: Props) {
+export function Search({button, onSubmit, haveErr}: Props) {
 
     const [isFocused, setIsFocused] = useState(false);
     const [X, setX] = useState(0);
@@ -144,7 +148,8 @@ export function Search({button, onSubmit,haveErr}: Props) {
                 <SearchWrapper haveErr={haveErr} isFocused={isFocused}>
                     <FontAwesomeIcon icon={faSearch}/>
                 </SearchWrapper>
-                <Input haveErr={haveErr} ref={InputEl} type='text' value={city} onChange={onInputChange} onFocus={handleOnFocus}
+                <Input haveErr={haveErr} ref={InputEl} maxLength={22} type='text' value={city} onChange={onInputChange}
+                       onFocus={handleOnFocus}
                        onBlur={handleOnBlur}
                        placeholder='city..'/>
                 <Button haveErr={haveErr} ref={ButtonEl} onMouseMove={handleOnMouseMove} X={X} Y={Y}>

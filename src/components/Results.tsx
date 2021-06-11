@@ -1,10 +1,15 @@
 import styled from "styled-components";
 import {faSadTear} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useState} from "react";
 
 interface Props {
-    temperature: number;
     haveErr: boolean;
+    temperature: number;
+    maxTemp: number;
+    humidity: number;
+    minTemp: number;
+    wind: number;
 }
 
 const Wrapper = styled.div`
@@ -38,6 +43,7 @@ const Details = styled.div`
   gap: 40px;
   font-size: 1.3rem;
   align-items: center;
+  white-space: nowrap;
 
   .color {
     color: ${({theme}) => theme.colors.cold};
@@ -48,28 +54,29 @@ const Error = styled.div`
   //color: red;
   display: flex;
   padding: 2rem;
-  
-  .sad{
+
+  .sad {
     font-size: 6rem;
     padding-right: 1rem;
-    border-right: 2px solid ${({theme})=>theme.colors.hot};
+    border-right: 2px solid ${({theme}) => theme.colors.hot};
   }
-  
-  .sad-content{
+
+  .sad-content {
     padding: 1rem 1rem 0 1rem;
   }
+
   .sad-content span {
     font-size: 2rem;
   }
-  
-  .sad-content:not(span){
+
+  .sad-content:not(span) {
     font-size: 1.1rem;
     letter-spacing: 0.025rem;
   }
-  
+
 `
 
-export function Results({temperature, haveErr}: Props) {
+export function Results({temperature, haveErr, minTemp, wind, humidity, maxTemp}: Props) {
 
     console.log(haveErr)
     return (
@@ -81,19 +88,19 @@ export function Results({temperature, haveErr}: Props) {
                             <FontAwesomeIcon icon={faSadTear}/>
                         </div>
                         <div className='sad-content'>
-                            <span>Sorry</span>, we Couldn't find your beatifull city or maby you miss spelled city !
+                            <span>Sorry</span>, we Couldn't find your beatifull city or maby you miss spelled the city !
                         </div>
                     </Error>
                     :
                     <Content>
                         <Temperature>
-                            {temperature}&#8451;
+                            {temperature.toFixed(1)}&#8451;
                         </Temperature>
                         <Details>
-                            <div>humanity <span className='color'>&#10073;</span> 434</div>
-                            <div>humanity <span className='color'>&#10073;</span> 434</div>
-                            <div>humanity <span className='color'>&#10073;</span> 434</div>
-                            <div>humanity <span className='color'>&#10073;</span> 434</div>
+                            <div>Max <span className='color'>&#10073;</span> {maxTemp.toFixed(1)}&#8451;</div>
+                            <div>Humanity <span className='color'>&#10073;</span> {humidity}%</div>
+                            <div>Min <span className='color'>&#10073;</span> {minTemp.toFixed(1)}&#8451;</div>
+                            <div>wind <span className='color'>&#10073;</span> {wind}m/s</div>
                         </Details>
                     </Content>
             }
