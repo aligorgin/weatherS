@@ -19,10 +19,10 @@ export default function All() {
     const [humidity, setHumidity] = useState<number>(0);
     const [minTemp, setMinTemp] = useState<number>(0);
     const [wind, setWind] = useState<number>(0);
+    const [iconWeather,setIconWeather] = useState<string>('');
 
 
     const onSearchSubmit = async (term: string) => {
-        console.log(term);
         term === '' ? setIsShow(false) : setIsShow(true);
         const response = await WeatherMap.get('/data/2.5/weather', {
             params: {
@@ -34,21 +34,21 @@ export default function All() {
 
         if (response) {
             setHaveErr(false);
-            console.log(response);
             setTemperature(response.data.main.temp - 273.15);
             setMaxTemp((response.data.main.temp_max - 273.15));
             setHumidity(response.data.main.humidity);
             setMinTemp(response.data.main.temp_min - 273.15);
-            setWind(response.data.wind.speed)
+            setWind(response.data.wind.speed);
+            setIconWeather(response.data.weather[0].icon);
         }
     }
 
     return (
         <Wrapper>
             <Header title='Weather App'/>
-            <Search haveErr={haveErr} button='Search' onSubmit={onSearchSubmit}/>
+            <Search temperature={temperature} haveErr={haveErr} button='Search' onSubmit={onSearchSubmit}/>
             {isShow &&
-            <Results maxTemp={maxTemp} humidity={humidity} minTemp={minTemp} wind={wind} haveErr={haveErr}
+            <Results iconWeather={iconWeather} maxTemp={maxTemp} humidity={humidity} minTemp={minTemp} wind={wind} haveErr={haveErr}
                      temperature={temperature}/>}
         </Wrapper>
 

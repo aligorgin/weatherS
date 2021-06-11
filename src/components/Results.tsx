@@ -1,7 +1,9 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import {faSadTear} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import Words from "./Words";
+import WeatherIcon from "./WeatherIcon";
 
 interface Props {
     haveErr: boolean;
@@ -10,6 +12,7 @@ interface Props {
     humidity: number;
     minTemp: number;
     wind: number;
+    iconWeather:string;
 }
 
 const Wrapper = styled.div`
@@ -18,7 +21,7 @@ const Wrapper = styled.div`
   height: 13rem;
   background-color: ${({theme}) => theme.colors.dark};
   border-radius: 5px;
-  margin: 5rem auto 0;
+  margin: 6rem auto 20rem;
 `
 
 const Content = styled.div`
@@ -26,13 +29,18 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  position: relative;
 `
 
 const Temperature = styled.div`
   font-size: 4rem;
   display: inline-flex;
-  padding: 1.8rem 1.6rem 1.8rem 1rem;
+  padding: 1.8rem 1.6rem 1.8rem .1rem;
   border-right: 2px solid ${({theme}) => theme.colors.cold};
+
+  ${props => props.isHot && css`
+    border-color: ${({theme}) => theme.colors.hot};
+  `}
 `
 
 const Details = styled.div`
@@ -48,6 +56,13 @@ const Details = styled.div`
   .color {
     color: ${({theme}) => theme.colors.cold};
   }
+
+  ${props => props.isHot && css`
+    .color {
+      color: ${({theme}) => theme.colors.hot};
+    }
+  `}
+
 `
 
 const Error = styled.div`
@@ -73,12 +88,26 @@ const Error = styled.div`
     font-size: 1.1rem;
     letter-spacing: 0.025rem;
   }
-
 `
 
-export function Results({temperature, haveErr, minTemp, wind, humidity, maxTemp}: Props) {
+const IconWeather = styled.span`
+  position: absolute;
+  display: inline-flex;
+  top: -3rem;
+  left: 4rem;
+`
 
-    console.log(haveErr)
+export function Results({temperature, haveErr, minTemp, wind, humidity, maxTemp,iconWeather}: Props) {
+
+    const [isHot, setIsHot] = useState<boolean>(false);
+    useEffect(() => {
+        temperature > 31 ? setIsHot(true) : setIsHot(false);
+    }, [temperature]);
+
+    // if (iconWeather){
+    //     console.log(iconWeather)
+    // }
+
     return (
         <Wrapper>
             {
@@ -88,15 +117,18 @@ export function Results({temperature, haveErr, minTemp, wind, humidity, maxTemp}
                             <FontAwesomeIcon icon={faSadTear}/>
                         </div>
                         <div className='sad-content'>
-                            <span>Sorry</span>, we Couldn't find your beatifull city or maby you miss spelled the city !
+                            <span>Sorry</span>,{Words.errorWords}
                         </div>
                     </Error>
                     :
                     <Content>
-                        <Temperature>
+                        <IconWeather>
+                            <WeatherIcon iconWeather={iconWeather}/>
+                        </IconWeather>
+                        <Temperature isHot={isHot}>
                             {temperature.toFixed(1)}&#8451;
                         </Temperature>
-                        <Details>
+                        <Details isHot={isHot}>
                             <div>Max <span className='color'>&#10073;</span> {maxTemp.toFixed(1)}&#8451;</div>
                             <div>Humanity <span className='color'>&#10073;</span> {humidity}%</div>
                             <div>Min <span className='color'>&#10073;</span> {minTemp.toFixed(1)}&#8451;</div>

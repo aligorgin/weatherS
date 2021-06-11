@@ -7,6 +7,7 @@ interface Props {
     button: string;
     onSubmit: (term: string) => void;
     haveErr: boolean;
+    temperature: number;
 }
 
 const fadeIn = keyframes`
@@ -32,13 +33,20 @@ const SearchWrapper = styled.div`
   border-bottom: 2px solid ${({theme}) => theme.colors.text};
   color: ${({theme}) => theme.colors.text};
   padding: 0 .25rem 0.25rem 0;
-  
+
   ${props => props.isFocused && css`
     border-color: ${({theme}) => theme.colors.cold};
     color: ${({theme}) => theme.colors.cold};
   `}
-  
+
   ${props => props.haveErr && css`
+    ${props => props.isFocused && css`
+      border-color: ${({theme}) => theme.colors.hot};
+      color: ${({theme}) => theme.colors.hot};
+    `}
+  `}
+
+  ${props => props.isHot && css`
     ${props => props.isFocused && css`
       border-color: ${({theme}) => theme.colors.hot};
       color: ${({theme}) => theme.colors.hot};
@@ -68,6 +76,14 @@ const Input = styled.input`
       border-color: ${({theme}) => theme.colors.hot};
     }
   `}
+
+  ${props => props.isHot && css`
+    &:focus {
+      border-color: ${({theme}) => theme.colors.hot}
+    }
+  
+  `}
+
 `
 const Button = styled.button`
   position: relative;
@@ -83,6 +99,9 @@ const Button = styled.button`
 
   ${props => props.haveErr && css`
     background: ${({theme}) => theme.colors.hot};
+  `}
+  ${props => props.isHot && css`
+    background-color: ${({theme}) => theme.colors.hot};
   `}
   &:before {
     content: '';
@@ -114,12 +133,13 @@ const Button = styled.button`
 
 `
 
-export function Search({button, onSubmit, haveErr}: Props) {
+export function Search({button, onSubmit, haveErr, temperature}: Props) {
 
     const [isFocused, setIsFocused] = useState(false);
     const [X, setX] = useState(0);
     const [Y, setY] = useState(0);
     const [city, setCity] = useState('');
+    const [isHot, setIsHot] = useState(false)
 
     const InputEl = useRef<HTMLInputElement>(null);
     const ButtonEl = useRef<HTMLButtonElement>(null)
@@ -141,18 +161,27 @@ export function Search({button, onSubmit, haveErr}: Props) {
         e.preventDefault();
         onSubmit(city);
     }
+    //gtr:to preventing to many re-rendering
+    // useEffect(() => {
+    //     city == '' ? setIsEmpty(true) : setIsEmpty(false);
+    // }, [city])
+    useEffect(() => {
+        temperature > 31 ? setIsHot(true) : setIsHot(false);
+    }, [temperature])
+
 
     return (
         <form onSubmit={onFormSubmit} action="">
             <Wrapper>
-                <SearchWrapper haveErr={haveErr} isFocused={isFocused}>
+                <SearchWrapper isHot={isHot} haveErr={haveErr} isFocused={isFocused}>
                     <FontAwesomeIcon icon={faSearch}/>
                 </SearchWrapper>
-                <Input haveErr={haveErr} ref={InputEl} maxLength={22} type='text' value={city} onChange={onInputChange}
+                <Input isHot={isHot} haveErr={haveErr} ref={InputEl} maxLength={22} type='text' value={city}
+                       onChange={onInputChange}
                        onFocus={handleOnFocus}
                        onBlur={handleOnBlur}
-                       placeholder='city..'/>
-                <Button haveErr={haveErr} ref={ButtonEl} onMouseMove={handleOnMouseMove} X={X} Y={Y}>
+                       placeholder='City (London, New York, ...)'/>
+                <Button isHot={isHot} haveErr={haveErr} ref={ButtonEl} onMouseMove={handleOnMouseMove} X={X} Y={Y}>
                 <span>
                     {button}
                 </span>
