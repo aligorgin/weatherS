@@ -7,7 +7,7 @@ interface Props {
     button: string;
     onSubmit: (term: string) => void;
     haveErr: boolean;
-    temperature: number;
+    weather:any;
 }
 
 const fadeIn = keyframes`
@@ -133,7 +133,7 @@ const Button = styled.button`
 
 `
 
-export function Search({button, onSubmit, haveErr, temperature}: Props) {
+export function Search({button, onSubmit, haveErr, weather}: Props) {
 
     const [isFocused, setIsFocused] = useState(false);
     const [X, setX] = useState(0);
@@ -166,8 +166,8 @@ export function Search({button, onSubmit, haveErr, temperature}: Props) {
     //     city == '' ? setIsEmpty(true) : setIsEmpty(false);
     // }, [city])
     useEffect(() => {
-        temperature > 31 ? setIsHot(true) : setIsHot(false);
-    }, [temperature])
+        (weather.data.main.temp - 273.15) > 31 ? setIsHot(true) : setIsHot(false);
+    }, [weather])
 
 
     return (

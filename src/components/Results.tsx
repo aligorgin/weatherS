@@ -3,16 +3,11 @@ import {faSadTear} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEffect, useState} from "react";
 import Words from "./Words";
-import WeatherIcon from "./WeatherIcon";
+// import WeatherIcon from "./WeatherIcon";
 
 interface Props {
     haveErr: boolean;
-    temperature: number;
-    maxTemp: number;
-    humidity: number;
-    minTemp: number;
-    wind: number;
-    iconWeather:string;
+    weather:any;
 }
 
 const Wrapper = styled.div`
@@ -97,12 +92,12 @@ const IconWeather = styled.span`
   left: 4rem;
 `
 
-export function Results({temperature, haveErr, minTemp, wind, humidity, maxTemp,iconWeather}: Props) {
+export function Results({ haveErr,weather}: Props) {
 
     const [isHot, setIsHot] = useState<boolean>(false);
     useEffect(() => {
-        temperature > 31 ? setIsHot(true) : setIsHot(false);
-    }, [temperature]);
+        (weather.data.main.temp - 273.15) > 31 ? setIsHot(true) : setIsHot(false);
+    }, [weather]);
 
     // if (iconWeather){
     //     console.log(iconWeather)
@@ -123,16 +118,16 @@ export function Results({temperature, haveErr, minTemp, wind, humidity, maxTemp,
                     :
                     <Content>
                         <IconWeather>
-                            <WeatherIcon iconWeather={iconWeather}/>
+                                <div>hey</div>
                         </IconWeather>
                         <Temperature isHot={isHot}>
-                            {temperature.toFixed(1)}&#8451;
+                            {(weather.data.main.temp - 273.15).toFixed(1)}&#8451;
                         </Temperature>
                         <Details isHot={isHot}>
-                            <div>Max <span className='color'>&#10073;</span> {maxTemp.toFixed(1)}&#8451;</div>
-                            <div>Humanity <span className='color'>&#10073;</span> {humidity}%</div>
-                            <div>Min <span className='color'>&#10073;</span> {minTemp.toFixed(1)}&#8451;</div>
-                            <div>wind <span className='color'>&#10073;</span> {wind}m/s</div>
+                            <div>Max <span className='color'>&#10073;</span> {(weather.data.main.temp_max - 273.15).toFixed(1)}&#8451;</div>
+                            <div>Humanity <span className='color'>&#10073;</span> {weather.data.main.humidity}%</div>
+                            <div>Min <span className='color'>&#10073;</span> {(weather.data.main.temp_min - 273.15).toFixed(1)}&#8451;</div>
+                            <div>wind <span className='color'>&#10073;</span> {(weather.data.wind.speed)}m/s</div>
                         </Details>
                     </Content>
             }

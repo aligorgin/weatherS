@@ -2,7 +2,7 @@ import {Header} from "../components/Header";
 import styled from "styled-components";
 import {Search} from "../components/Search";
 import {Results} from "../components/Results";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import WeatherMap from '../api/WeatherMap';
 
 const Wrapper = styled.div`
@@ -14,42 +14,38 @@ export default function All() {
 
     const [isShow, setIsShow] = useState<boolean>(false);
     const [haveErr, setHaveErr] = useState<boolean>(false);
-    const [temperature, setTemperature] = useState<number>(0);
-    const [maxTemp, setMaxTemp] = useState<number>(0);
-    const [humidity, setHumidity] = useState<number>(0);
-    const [minTemp, setMinTemp] = useState<number>(0);
-    const [wind, setWind] = useState<number>(0);
-    const [iconWeather,setIconWeather] = useState<string>('');
+    const [weather, setWeather] = useState(null);
+    const [submitted, setSubmitted] = useState<number>(1);
 
+    useEffect(() => {
+        const onSearchSubmit = async (term: string) => {
+            term === '' ? setIsShow(false) : setIsShow(true);
+            const response = await WeatherMap.get('/data/2.5/weather', {
+                params: {
+                    q: term,
+                }
+            }).catch(() => {
+                setHaveErr(true)
+            });
 
-    const onSearchSubmit = async (term: string) => {
-        term === '' ? setIsShow(false) : setIsShow(true);
-        const response = await WeatherMap.get('/data/2.5/weather', {
-            params: {
-                q: term,
+            if (response) {
+                setHaveErr(false);
+                setWeather(response);
+                setSubmitted(submitted + 1);
             }
-        }).catch(() => {
-            setHaveErr(true)
-        });
-
-        if (response) {
-            setHaveErr(false);
-            setTemperature(response.data.main.temp - 273.15);
-            setMaxTemp((response.data.main.temp_max - 273.15));
-            setHumidity(response.data.main.humidity);
-            setMinTemp(response.data.main.temp_min - 273.15);
-            setWind(response.data.wind.speed);
-            setIconWeather(response.data.weather[0].icon);
         }
-    }
+
+    }, [submitted])
+
+
+    console.log(weather);
 
     return (
         <Wrapper>
             <Header title='Weather App'/>
-            <Search temperature={temperature} haveErr={haveErr} button='Search' onSubmit={onSearchSubmit}/>
+            <Search weather={weather} haveErr={haveErr} button='Search' onSubmit={onSearchSubmit}/>
             {isShow &&
-            <Results iconWeather={iconWeather} maxTemp={maxTemp} humidity={humidity} minTemp={minTemp} wind={wind} haveErr={haveErr}
-                     temperature={temperature}/>}
+            <Results weather={weather} haveErr={haveErr}/>}
         </Wrapper>
 
     )

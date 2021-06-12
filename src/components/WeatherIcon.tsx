@@ -12,9 +12,6 @@ const Icon = styled.div`
 `
 
 const WeatherIcon = ({iconWeather}: Props) => {
-
-
-
     useEffect(() => {
         let x = 0;
         switch (iconWeather) {
