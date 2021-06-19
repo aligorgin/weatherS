@@ -3,11 +3,12 @@ import {faSadTear} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEffect, useState} from "react";
 import Words from "./Words";
-// import WeatherIcon from "./WeatherIcon";
+import {SyncLoader} from "react-spinners";
 
 interface Props {
     haveErr: boolean;
-    weather:any;
+    weather: any;
+    loading: boolean;
 }
 
 const Wrapper = styled.div`
@@ -16,7 +17,7 @@ const Wrapper = styled.div`
   height: 13rem;
   background-color: ${({theme}) => theme.colors.dark};
   border-radius: 5px;
-  margin: 6rem auto 20rem;
+  margin: 4rem auto 20rem;
 `
 
 const Content = styled.div`
@@ -85,27 +86,32 @@ const Error = styled.div`
   }
 `
 
-const IconWeather = styled.span`
-  position: absolute;
-  display: inline-flex;
-  top: -3rem;
-  left: 4rem;
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  color: red;
 `
 
-export function Results({ haveErr,weather}: Props) {
+export function Results({loading, haveErr, weather}: Props) {
 
     const [isHot, setIsHot] = useState<boolean>(false);
     useEffect(() => {
-        (weather.data.main.temp - 273.15) > 31 ? setIsHot(true) : setIsHot(false);
+        if (weather) {
+            (weather.data.main.temp - 273.15) > 31 ? setIsHot(true) : setIsHot(false);
+        }
     }, [weather]);
 
-    // if (iconWeather){
-    //     console.log(iconWeather)
-    // }
 
     return (
         <Wrapper>
-            {
+            {loading ?
+                <Loading>
+                    <SyncLoader color='#2196f3'/>
+                </Loading>
+                :
                 haveErr ?
                     <Error>
                         <div className='sad'>
@@ -117,16 +123,17 @@ export function Results({ haveErr,weather}: Props) {
                     </Error>
                     :
                     <Content>
-                        <IconWeather>
-                                <div>hey</div>
-                        </IconWeather>
                         <Temperature isHot={isHot}>
                             {(weather.data.main.temp - 273.15).toFixed(1)}&#8451;
                         </Temperature>
                         <Details isHot={isHot}>
-                            <div>Max <span className='color'>&#10073;</span> {(weather.data.main.temp_max - 273.15).toFixed(1)}&#8451;</div>
+                            <div>Max <span
+                                className='color'>&#10073;</span> {(weather.data.main.temp_max - 273.15).toFixed(1)}&#8451;
+                            </div>
                             <div>Humanity <span className='color'>&#10073;</span> {weather.data.main.humidity}%</div>
-                            <div>Min <span className='color'>&#10073;</span> {(weather.data.main.temp_min - 273.15).toFixed(1)}&#8451;</div>
+                            <div>Min <span
+                                className='color'>&#10073;</span> {(weather.data.main.temp_min - 273.15).toFixed(1)}&#8451;
+                            </div>
                             <div>wind <span className='color'>&#10073;</span> {(weather.data.wind.speed)}m/s</div>
                         </Details>
                     </Content>

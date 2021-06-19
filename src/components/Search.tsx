@@ -7,7 +7,7 @@ interface Props {
     button: string;
     onSubmit: (term: string) => void;
     haveErr: boolean;
-    weather:any;
+    weather: any;
 }
 
 const fadeIn = keyframes`
@@ -81,7 +81,7 @@ const Input = styled.input`
     &:focus {
       border-color: ${({theme}) => theme.colors.hot}
     }
-  
+
   `}
 
 `
@@ -166,7 +166,9 @@ export function Search({button, onSubmit, haveErr, weather}: Props) {
     //     city == '' ? setIsEmpty(true) : setIsEmpty(false);
     // }, [city])
     useEffect(() => {
-        (weather.data.main.temp - 273.15) > 31 ? setIsHot(true) : setIsHot(false);
+        if (weather) {
+            (weather.data.main.temp - 273.15) > 31 ? setIsHot(true) : setIsHot(false);
+        }
     }, [weather])
 
 
