@@ -3,7 +3,7 @@ import {faSadTear} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useEffect, useState} from "react";
 import Words from "./Words";
-import {SyncLoader} from "react-spinners";
+import {Skeleton} from "./Skeleton";
 
 interface Props {
     haveErr: boolean;
@@ -13,13 +13,13 @@ interface Props {
 
 const Wrapper = styled.div`
   color: ${({theme}) => theme.colors.text};
+  //box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
   width: 39.5rem;
   height: 13rem;
   background-color: ${({theme}) => theme.colors.dark};
   border-radius: 5px;
   margin: 4rem auto 20rem;
-`
-
+  position: relative;`
 const Content = styled.div`
   padding: 1.5rem;
   width: 100%;
@@ -27,7 +27,6 @@ const Content = styled.div`
   display: flex;
   position: relative;
 `
-
 const Temperature = styled.div`
   font-size: 4rem;
   display: inline-flex;
@@ -38,7 +37,6 @@ const Temperature = styled.div`
     border-color: ${({theme}) => theme.colors.hot};
   `}
 `
-
 const Details = styled.div`
   padding: .5rem 0.5rem 0.5rem 1.6rem;
   display: grid;
@@ -60,22 +58,18 @@ const Details = styled.div`
   `}
 
 `
-
 const Error = styled.div`
-  //color: red;
   display: flex;
   padding: 2rem;
-
   .sad {
     font-size: 6rem;
-    padding-right: 1rem;
+    padding-right: 1.5rem;
     border-right: 2px solid ${({theme}) => theme.colors.hot};
   }
-
   .sad-content {
-    padding: 1rem 1rem 0 1rem;
+    padding: 2rem 0 0 1.5rem;
+    line-height: 2rem;
   }
-
   .sad-content span {
     font-size: 2rem;
   }
@@ -85,32 +79,46 @@ const Error = styled.div`
     letter-spacing: 0.025rem;
   }
 `
-
-const Loading = styled.div`
+const SkeletonWrapper = styled.div`
+  padding: 4rem;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100%;
+  justify-content: space-between;
   width: 100%;
-  color: red;
+  height: 100%;
+
+  .circleLeft {
+    align-items: flex-end;
+
+  }
+
+  .rects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+
+  }
 `
 
-export function Results({loading, haveErr, weather}: Props) {
 
+export function Results({loading, haveErr, weather}: Props) {
     const [isHot, setIsHot] = useState<boolean>(false);
     useEffect(() => {
         if (weather) {
             (weather.data.main.temp - 273.15) > 31 ? setIsHot(true) : setIsHot(false);
         }
     }, [weather]);
-
-
     return (
         <Wrapper>
             {loading ?
-                <Loading>
-                    <SyncLoader color='#2196f3'/>
-                </Loading>
+                <SkeletonWrapper>
+                    <div className='circleLeft'>
+                        <Skeleton type='circle' height={110} width={110}/>
+                    </div>
+                    <div className='rects'>
+                        <Skeleton type='rect' width={140} height={20}/>
+                    </div>
+                </SkeletonWrapper>
                 :
                 haveErr ?
                     <Error>
@@ -118,7 +126,7 @@ export function Results({loading, haveErr, weather}: Props) {
                             <FontAwesomeIcon icon={faSadTear}/>
                         </div>
                         <div className='sad-content'>
-                            <span>Sorry</span>,{Words.errorWords}
+                            <span>Sorry </span>,{Words.errorWords}
                         </div>
                     </Error>
                     :
@@ -138,7 +146,6 @@ export function Results({loading, haveErr, weather}: Props) {
                         </Details>
                     </Content>
             }
-
         </Wrapper>
     )
 }

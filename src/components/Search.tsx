@@ -24,8 +24,10 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 3rem;
+  //margin-top: 3rem;
   animation: ${fadeIn} 2s;
+  width: 35rem;
+  margin: 3rem auto 0;
 
 `
 const SearchWrapper = styled.div`
@@ -161,10 +163,6 @@ export function Search({button, onSubmit, haveErr, weather}: Props) {
         e.preventDefault();
         onSubmit(city);
     }
-    //gtr:to preventing to many re-rendering
-    // useEffect(() => {
-    //     city == '' ? setIsEmpty(true) : setIsEmpty(false);
-    // }, [city])
     useEffect(() => {
         if (weather) {
             (weather.data.main.temp - 273.15) > 31 ? setIsHot(true) : setIsHot(false);

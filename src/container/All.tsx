@@ -6,16 +6,8 @@ import {useState} from "react";
 import WeatherMap from '../api/WeatherMap';
 
 const Wrapper = styled.div`
-  width: 45rem;
-  margin: 0 auto;
+    
 `
-
-
-const fetchData = async () => {
-    return await WeatherMap.get('/data/2.5/weather', {
-        params: {}
-    })
-}
 
 export default function All() {
 
@@ -35,13 +27,12 @@ export default function All() {
             }
         }).then((res) => {
                 setWeather(res);
-                console.log(res);
                 setLoading(false);
             })
             .catch((e) => {
                 setHaveErr(true);
-                console.log(e);
                 setLoading(false);
+                console.log(e);
             });
     }
 
