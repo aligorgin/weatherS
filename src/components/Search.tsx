@@ -61,6 +61,10 @@ const Input = styled.input`
     outline: none;
     border-bottom: 2px solid ${({theme}) => theme.colors.cold};
   }
+  
+  &::-webkit-input-placeholder{
+    font-size: 1rem;
+  }
 
   width: 40%;
   background-color: transparent;
@@ -176,7 +180,7 @@ export function Search({button, onSubmit, haveErr, weather}: Props) {
                 <SearchWrapper isHot={isHot} haveErr={haveErr} isFocused={isFocused}>
                     <FontAwesomeIcon icon={faSearch}/>
                 </SearchWrapper>
-                <Input isHot={isHot} haveErr={haveErr} ref={InputEl} maxLength={22} type='text' value={city}
+                <Input isHot={isHot} haveErr={haveErr} ref={InputEl} maxLength={57} type='text' value={city}
                        onChange={onInputChange}
                        onFocus={handleOnFocus}
                        onBlur={handleOnBlur}
