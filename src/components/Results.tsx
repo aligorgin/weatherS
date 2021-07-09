@@ -14,38 +14,77 @@ interface Props {
 const Wrapper = styled.div`
   color: ${({theme}) => theme.colors.text};
   //box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
-  width: 39.5rem;
-  height: 13rem;
+  width: 90%;
+  height: 34rem;
   background-color: ${({theme}) => theme.colors.dark};
   border-radius: 5px;
   margin: 4rem auto 20rem;
-  position: relative;`
+  position: relative;
+
+
+  @media ${({theme}) => theme.mediaQueries.topOf4} {
+    width: 22rem;
+  }
+
+  @media ${({theme}) => theme.mediaQueries.topOf7} {
+    width: 39.5rem;
+    height: 13rem;
+  }
+`
 const Content = styled.div`
-  padding: 1.5rem;
+  padding: 1rem;
   width: 100%;
   height: 100%;
   display: flex;
   position: relative;
+  flex-direction: column;
+
+  @media ${({theme}) => theme.mediaQueries.topOf7} {
+    flex-direction: row;
+    padding:1.5rem;
+  }
 `
 const Temperature = styled.div`
   font-size: 4rem;
   display: inline-flex;
-  padding: 1.8rem 1.6rem 1.8rem .1rem;
-  border-right: 2px solid ${({theme}) => theme.colors.cold};
+  border-bottom: 2px solid ${({theme}) => theme.colors.cold};
+  height: 25%;
+  align-items: center;
+  justify-content: center;
 
+
+  @media ${({theme}) => theme.mediaQueries.topOf7} {
+  border-bottom-width: 0;
+  display: inline;
+  border-right: 2px solid ${({theme}) => theme.colors.cold};
+  padding: 1.8rem 1.6rem 1.8rem .1rem;
+  height: auto;
+  } 
+  
+  
   ${props => props.isHot && css`
-    border-color: ${({theme}) => theme.colors.hot};
-  `}
+  border-color: ${({theme}) => theme.colors.hot};
+ `}
+  
+  
 `
+
+
 const Details = styled.div`
-  padding: .5rem 0.5rem 0.5rem 1.6rem;
+  padding: .6rem 2.5rem 0 2.5rem;
   display: grid;
   flex-grow: 1;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 20px;
   font-size: 1.3rem;
   align-items: center;
   white-space: nowrap;
+
+  @media ${({theme}) => theme.mediaQueries.topOf7} {
+    padding: 1.5rem 0.5rem 0 1.6rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap:40px;
+  }
 
   .color {
     color: ${({theme}) => theme.colors.cold};
@@ -61,15 +100,18 @@ const Details = styled.div`
 const Error = styled.div`
   display: flex;
   padding: 2rem;
+
   .sad {
     font-size: 6rem;
     padding-right: 1.5rem;
     border-right: 2px solid ${({theme}) => theme.colors.hot};
   }
+
   .sad-content {
     padding: 2rem 0 0 1.5rem;
     line-height: 2rem;
   }
+
   .sad-content span {
     font-size: 2rem;
   }
@@ -94,9 +136,12 @@ const SkeletonWrapper = styled.div`
 
   .rects {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 40px;
 
+    @media ${({theme}) => theme.mediaQueries.topOf7} {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 `
 

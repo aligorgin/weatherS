@@ -24,10 +24,14 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  //margin-top: 3rem;
   animation: ${fadeIn} 2s;
   width: 35rem;
   margin: 3rem auto 0;
+  
+  @media ${({theme}) => theme.mediaQueries.topOf7} {
+    display: flex;
+    flex-direction: column;
+  }
 
 `
 const SearchWrapper = styled.div`
@@ -148,12 +152,12 @@ export function Search({button, onSubmit, haveErr, weather}: Props) {
     const [isHot, setIsHot] = useState(false)
 
     const InputEl = useRef<HTMLInputElement>(null);
-    const ButtonEl = useRef<HTMLButtonElement>(null)
+    const ButtonEl = useRef<HTMLButtonElement>(null);
     const handleOnFocus = () => {
-        setIsFocused(true)
+        setIsFocused(true);
     };
     const handleOnBlur = () => {
-        setIsFocused(false)
+        setIsFocused(false);
     };
     const handleOnMouseMove = (e) => {
         setX(e.pageX - ButtonEl.current.offsetLeft);
