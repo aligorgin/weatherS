@@ -27,10 +27,15 @@ const Wrapper = styled.div`
   animation: ${fadeIn} 2s;
   width: 35rem;
   margin: 3rem auto 0;
+  flex-direction: column;
   
   @media ${({theme}) => theme.mediaQueries.topOf7} {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+  }
+  div{
+    display: flex;
+    justify-content: center;
   }
 
 `
@@ -38,7 +43,7 @@ const SearchWrapper = styled.div`
   font-size: 1.2rem;
   border-bottom: 2px solid ${({theme}) => theme.colors.text};
   color: ${({theme}) => theme.colors.text};
-  padding: 0 .25rem 0.25rem 0;
+  padding: .25rem .25rem 0.25rem 0;
 
   ${props => props.isFocused && css`
     border-color: ${({theme}) => theme.colors.cold};
@@ -70,7 +75,7 @@ const Input = styled.input`
     font-size: 1rem;
   }
 
-  width: 40%;
+  width: 60%;
   background-color: transparent;
   color: ${({theme}) => theme.colors.text};
   border-top: none;
@@ -106,6 +111,7 @@ const Button = styled.button`
   border-width: 0;
   overflow: hidden;
   border-radius: 5px;
+  margin-top: 2rem;
 
   ${props => props.haveErr && css`
     background: ${({theme}) => theme.colors.hot};
@@ -139,6 +145,10 @@ const Button = styled.button`
   span {
     position: relative;
     z-index: 1;
+  }
+
+  @media ${({theme})=>theme.mediaQueries.topOf7}{
+    margin-top:0;
   }
 
 `
@@ -179,16 +189,18 @@ export function Search({button, onSubmit, haveErr, weather}: Props) {
 
 
     return (
-        <form onSubmit={onFormSubmit} action="">
+        <form onSubmit={onFormSubmit}>
             <Wrapper>
-                <SearchWrapper isHot={isHot} haveErr={haveErr} isFocused={isFocused}>
-                    <FontAwesomeIcon icon={faSearch}/>
-                </SearchWrapper>
-                <Input isHot={isHot} haveErr={haveErr} ref={InputEl} maxLength={57} type='text' value={city}
-                       onChange={onInputChange}
-                       onFocus={handleOnFocus}
-                       onBlur={handleOnBlur}
-                       placeholder='City (London, New York, ...)'/>
+                <div>
+                    <SearchWrapper isHot={isHot} haveErr={haveErr} isFocused={isFocused}>
+                        <FontAwesomeIcon icon={faSearch}/>
+                    </SearchWrapper>
+                    <Input isHot={isHot} haveErr={haveErr} ref={InputEl} maxLength={57} type='text' value={city}
+                           onChange={onInputChange}
+                           onFocus={handleOnFocus}
+                           onBlur={handleOnBlur}
+                           placeholder='City (London, New York, ...)'/>
+                </div>
                 <Button isHot={isHot} haveErr={haveErr} ref={ButtonEl} onMouseMove={handleOnMouseMove} X={X} Y={Y}>
                 <span>
                     {button}
