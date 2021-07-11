@@ -25,13 +25,14 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   animation: ${fadeIn} 2s;
-  width: 35rem;
+  width: 80%;
   margin: 3rem auto 0;
   flex-direction: column;
   
   @media ${({theme}) => theme.mediaQueries.topOf7} {
     display: flex;
     flex-direction: row;
+    width:35rem;
   }
   div{
     display: flex;
@@ -75,7 +76,7 @@ const Input = styled.input`
     font-size: 1rem;
   }
 
-  width: 60%;
+  width: 85%;
   background-color: transparent;
   color: ${({theme}) => theme.colors.text};
   border-top: none;
@@ -83,7 +84,6 @@ const Input = styled.input`
   border-left: none;
   border-bottom: 2px solid ${({theme}) => theme.colors.text};
   padding: 0 0 .5rem .5rem;
-  margin-right: 3rem;
   font-size: 1.4rem;
 
   ${props => props.haveErr && css`
@@ -96,8 +96,12 @@ const Input = styled.input`
     &:focus {
       border-color: ${({theme}) => theme.colors.hot}
     }
-
   `}
+  
+  @media ${({theme})=>theme.mediaQueries.topOf7}{
+    margin-right: 3rem;
+    width: 65%;
+  }
 
 `
 const Button = styled.button`
