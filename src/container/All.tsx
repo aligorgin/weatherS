@@ -6,7 +6,8 @@ import {useState} from "react";
 import WeatherMap from '../api/WeatherMap';
 
 const Wrapper = styled.div`
-    
+    height: 900px;
+    overflow-y: hidden;
 `
 
 export default function All() {
@@ -43,6 +44,5 @@ export default function All() {
             {isShow &&
             <Results loading={loading} weather={weather} haveErr={haveErr}/>}
         </Wrapper>
-
     )
 }

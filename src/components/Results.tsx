@@ -68,14 +68,12 @@ const Temperature = styled.div`
   
   
 `
-
-
 const Details = styled.div`
-  padding: .6rem 2.5rem 0 2.5rem;
+  padding: 1.5rem 0 1rem 3rem;
   display: grid;
   flex-grow: 1;
   grid-template-rows: repeat(4, 1fr);
-  gap: 20px;
+  gap: 10px;
   font-size: 1.3rem;
   align-items: center;
   white-space: nowrap;
@@ -100,11 +98,29 @@ const Details = styled.div`
 const Error = styled.div`
   display: flex;
   padding: 2rem;
-
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  
+  @media ${({theme})=>theme.mediaQueries.topOf7}{
+    flex-direction: row;
+  }
+  
   .sad {
-    font-size: 6rem;
-    padding-right: 1.5rem;
-    border-right: 2px solid ${({theme}) => theme.colors.hot};
+    font-size: 10rem;
+    display: inline-flex;
+    border-bottom: 2px solid ${({theme}) => theme.colors.hot};
+    justify-content: center;
+    padding-bottom: 3rem;
+    padding-right: 0;
+    
+    @media ${({theme})=>theme.mediaQueries.topOf7}{
+      padding: 1.1rem 1.5rem 0 0 ;
+      font-size: 6rem;
+      border-bottom:none;
+      border-right: 2px solid ${({theme}) => theme.colors.hot};
+    }
+    
   }
 
   .sad-content {
@@ -128,6 +144,11 @@ const SkeletonWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
+  flex-direction: column;
+  
+  @media ${({theme})=>theme.mediaQueries.topOf7}{
+    flex-direction: row;
+  }
 
   .circleLeft {
     align-items: flex-end;
@@ -136,7 +157,7 @@ const SkeletonWrapper = styled.div`
 
   .rects {
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     gap: 40px;
 
     @media ${({theme}) => theme.mediaQueries.topOf7} {
@@ -144,7 +165,6 @@ const SkeletonWrapper = styled.div`
     }
   }
 `
-
 
 export function Results({loading, haveErr, weather}: Props) {
     const [isHot, setIsHot] = useState<boolean>(false);

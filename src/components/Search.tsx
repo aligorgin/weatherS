@@ -75,6 +75,9 @@ const Input = styled.input`
   &::-webkit-input-placeholder{
     font-size: 1rem;
   }
+  &::-moz-placeholder{
+    font-size: 1rem;
+  }
 
   width: 85%;
   background-color: transparent;
