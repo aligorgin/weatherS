@@ -71,14 +71,12 @@ const Input = styled.input`
     outline: none;
     border-bottom: 2px solid ${({theme}) => theme.colors.cold};
   }
-  
   &::-webkit-input-placeholder{
     font-size: 1rem;
   }
   &::-moz-placeholder{
     font-size: 1rem;
   }
-
   width: 85%;
   background-color: transparent;
   color: ${({theme}) => theme.colors.text};
@@ -88,13 +86,11 @@ const Input = styled.input`
   border-bottom: 2px solid ${({theme}) => theme.colors.text};
   padding: 0 0 .5rem .5rem;
   font-size: 1.4rem;
-
   ${props => props.haveErr && css`
     &:focus {
       border-color: ${({theme}) => theme.colors.hot};
     }
   `}
-
   ${props => props.isHot && css`
     &:focus {
       border-color: ${({theme}) => theme.colors.hot}
@@ -119,7 +115,6 @@ const Button = styled.button`
   overflow: hidden;
   border-radius: 5px;
   margin-top: 2rem;
-
   ${props => props.haveErr && css`
     background: ${({theme}) => theme.colors.hot};
   `}
@@ -138,26 +133,25 @@ const Button = styled.button`
     background: ${({theme}) => theme.colors.dark};
     transition: width .5s, height .5s;
   }
-
   &:hover:before {
-    width: 15rem;
-    height: 15rem;
+    width: 0;
+    height: 0;
   }
-
   &:active {
     transform: scale(95%);
     transition: transform .2s;
   }
-
   span {
     position: relative;
     z-index: 1;
   }
-
   @media ${({theme})=>theme.mediaQueries.topOf7}{
     margin-top:0;
+    &:hover:before {
+      width: 15rem;
+      height: 15rem;
+    }
   }
-
 `
 
 export function Search({button, onSubmit, haveErr, weather}: Props) {
