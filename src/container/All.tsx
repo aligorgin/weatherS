@@ -39,7 +39,7 @@ export default function All() {
 
     return (
         <Wrapper>
-            <Header title='Weather App'/>
+            <Header title='Weather dude'/>
             <Search weather={weather} haveErr={haveErr} button='Search' onSubmit={onSearchSubmit}/>
             {isShow &&
             <Results loading={loading} weather={weather} haveErr={haveErr}/>}

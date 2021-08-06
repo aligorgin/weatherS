@@ -41,7 +41,7 @@ const Content = styled.div`
 
   @media ${({theme}) => theme.mediaQueries.topOf7} {
     flex-direction: row;
-    padding:1.5rem;
+    padding: 1.5rem;
   }
 `
 const Temperature = styled.div`
@@ -54,19 +54,24 @@ const Temperature = styled.div`
 
 
   @media ${({theme}) => theme.mediaQueries.topOf7} {
-  border-bottom-width: 0;
-  display: inline;
-  border-right: 2px solid ${({theme}) => theme.colors.cold};
-  padding: 1.8rem 1.6rem 1.8rem .1rem;
-  height: auto;
-  } 
-  
-  
+    border-bottom-width: 0;
+    display: inline;
+    border-right: 2px solid ${({theme}) => theme.colors.cold};
+    padding: 1.8rem 1.6rem 1.8rem .1rem;
+    height: auto;
+
+
+    ${props => props.isHot && css`
+      border-color: ${({theme}) => theme.colors.hot};
+    `}
+  }
+
+
   ${props => props.isHot && css`
-  border-color: ${({theme}) => theme.colors.hot};
- `}
-  
-  
+    border-color: ${({theme}) => theme.colors.hot};
+  `}
+
+
 `
 const Details = styled.div`
   padding: 1.5rem 0 1rem 3rem;
@@ -81,7 +86,7 @@ const Details = styled.div`
   @media ${({theme}) => theme.mediaQueries.topOf7} {
     padding: 1.5rem 0.5rem 0 1.6rem;
     grid-template-columns: repeat(2, 1fr);
-    gap:40px;
+    gap: 40px;
   }
 
   .color {
@@ -101,11 +106,11 @@ const Error = styled.div`
   width: 100%;
   height: 100%;
   flex-direction: column;
-  
-  @media ${({theme})=>theme.mediaQueries.topOf7}{
+
+  @media ${({theme}) => theme.mediaQueries.topOf7} {
     flex-direction: row;
   }
-  
+
   .sad {
     font-size: 10rem;
     display: inline-flex;
@@ -113,14 +118,14 @@ const Error = styled.div`
     justify-content: center;
     padding-bottom: 3rem;
     padding-right: 0;
-    
-    @media ${({theme})=>theme.mediaQueries.topOf7}{
+
+    @media ${({theme}) => theme.mediaQueries.topOf7} {
       padding: 1.1rem 1.5rem 0 0 ;
       font-size: 6rem;
-      border-bottom:none;
+      border-bottom: none;
       border-right: 2px solid ${({theme}) => theme.colors.hot};
     }
-    
+
   }
 
   .sad-content {
@@ -145,8 +150,8 @@ const SkeletonWrapper = styled.div`
   width: 100%;
   height: 100%;
   flex-direction: column;
-  
-  @media ${({theme})=>theme.mediaQueries.topOf7}{
+
+  @media ${({theme}) => theme.mediaQueries.topOf7} {
     flex-direction: row;
   }
 
