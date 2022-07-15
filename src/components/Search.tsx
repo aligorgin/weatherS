@@ -200,7 +200,7 @@ export function Search({button, onSubmit, haveErr, weather}: Props) {
                            onChange={onInputChange}
                            onFocus={handleOnFocus}
                            onBlur={handleOnBlur}
-                           placeholder='City (London, New York, ...)'/>
+                           placeholder='City (tehran, ahvaz, ...)'/>
                 </div>
                 <Button isHot={isHot} haveErr={haveErr} ref={ButtonEl} onMouseMove={handleOnMouseMove} X={X} Y={Y}>
                 <span>
