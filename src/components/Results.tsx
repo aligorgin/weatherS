@@ -208,7 +208,7 @@ export function Results({loading, haveErr, weather}: Props) {
                             <div>Max <span
                                 className='color'>&#10073;</span> {(weather.data.main.temp_max - 273.15).toFixed(1)}&#8451;
                             </div>
-                            <div>Humanity <span className='color'>&#10073;</span> {weather.data.main.humidity}%</div>
+                            <div>humidity <span className='color'>&#10073;</span> {weather.data.main.humidity}%</div>
                             <div>Min <span
                                 className='color'>&#10073;</span> {(weather.data.main.temp_min - 273.15).toFixed(1)}&#8451;
                             </div>
